@@ -1,8 +1,11 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Order.Outbox.Table.Publisher.Service.Entities;
 
 public class OrderOutbox
 {
-    public int Id { get; set; }
+    [Key]
+    public Guid IdempotentToken { get; set; } //idempotent sorunsalı için.
     public DateTime OccuredOn { get; set; }
     public DateTime? ProcessedDate { get; set; }
     public string Type { get; set; } //event

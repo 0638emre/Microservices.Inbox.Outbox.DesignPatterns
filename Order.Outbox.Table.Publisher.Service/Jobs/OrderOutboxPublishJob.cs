@@ -26,7 +26,7 @@ public class OrderOutboxPublishJob(IPublishEndpoint publishEndpoint) : IJob
                     if (orderCreatedEvent != null)
                     {
                          await publishEndpoint.Publish(orderCreatedEvent);
-                         await OrderOutboxSingletonDatabase.ExecuteAsync($"UPDATE TOP(1) OrderOutbox SET ProcessedDate = GETDATE() WHERE ID = '{orderOutbox.Id}'");
+                         await OrderOutboxSingletonDatabase.ExecuteAsync($"UPDATE TOP(1) OrderOutbox SET ProcessedDate = GETDATE() WHERE IdempotentToken = '{orderOutbox.IdempotentToken}'");
                     }
                     
                 }
